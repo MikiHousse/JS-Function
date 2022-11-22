@@ -242,3 +242,118 @@ const bubbleSort = (coll) => {
     } while (swapped); // продолжаем пока swapped, true
     return coll;
 }
+console.log(bubbleSort(bubble))
+
+// УЗНАТЬ ГДЕ ЗДЕСЬ ОШИБКА
+// const openingSymbols = ['(', '[', '{', '<'];
+// const closingSymbols = [')', ']', '}', '>'];
+
+// const isOpeningSymbol = (symbol) => openingSymbols.includes(symbol);
+
+// const getClosingSybolFor = (symbol) => closingSymbols[openingSymbols.indexOf(symbol)];
+
+// const isBalanced = (str) => {
+//     const stack = [];
+//     for (const item of str) {
+//         if (isOpeningSymbol !== item) {
+//             const closingSymbols = getClosingSybolFor(symbol);
+//             stack.push(closingSymbols);
+//         } else {
+//             const lastSavedSymbol = stack.pop();
+//             if(symbol !== lastSavedSymbol) {
+//                 return false;
+//             }
+//         }
+//     }
+//     return stack.length === 0;
+// }
+
+// console.log(isBalanced('[()]'))
+
+
+const persech1 = [10, 11, 24];
+const persech2 = [10, 13, 14, 18, 24, 30];
+
+const getSamesCount = (arr1, arr2) => {
+    let result = [];
+    let map = arr1.reduce((acc, i) => {
+        acc[i] = acc[i] ? acc[i] + 1 : 1;
+        return acc;
+    }, {})
+
+    for (let i = 0; i < arr2.length; i++) {
+        const current = arr2[i]
+        let count = map[current];
+
+        if (count && count > 0) {
+            result.push(current);
+            map[current] -= 1;
+        }
+    } 
+
+    const res = [...new Set(result)]
+
+    return res
+}
+console.log(getSamesCount(persech1, persech2))
+
+const location = [
+    ['Park', [10, 5]],
+    ['Sea', [1, 3]],
+    ['Museum', [8, 4]]
+];
+
+const currentPoint = [5, 5];
+
+const getTheNearestLocation = (loc, curr) => {
+    if (loc.length === 0) {
+        return null;
+    }
+    let [nearestLocation] = loc;
+    const [, nearestPoint] = nearestLocation;
+    let lowestDistance = getDistance(curr, nearestPoint);
+
+    for (const location of loc) {
+        const [, point] = location;
+        const distance = getDistance(curr, point);
+        if (distance < lowestDistance) {
+            lowestDistance = distance;
+            nearestLocation = location
+        }
+    }
+    return nearestLocation;
+}
+
+console.log(getTheNearestLocation(location, currentPoint))
+
+const max = [1, 10, 8];
+
+const getMax = (coll) => {
+    if (coll.length === 0) {
+        return null;
+    }
+
+    let [max, ...rest ] = coll;
+    for (const value of rest) {
+        if (value > max) {
+            max = value;
+        }
+    }
+    return max;
+}
+console.log(getMax(max))
+
+const flat = [1, [3, 2], 9];
+
+const flatten = (coll) => {
+    let result = [];
+    for (const item of coll) {
+        if (Array.isArray(item)) {
+            result = [...result, ...item]
+        } else {
+            result = [...result, item]
+        }
+    }
+    return result;
+}
+console.log(flatten(flat))
