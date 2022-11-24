@@ -1,4 +1,4 @@
-// import uniq from './lodash-master/iniq.js';
+// import _ from 'lodash-master';
 // № 1
 // Подставляем префикс к каждому элементу массива 
 const names = [1, 2, 3];
@@ -244,6 +244,7 @@ const bubbleSort = (coll) => {
 }
 console.log(bubbleSort(bubble))
 
+//№ 13
 // УЗНАТЬ ГДЕ ЗДЕСЬ ОШИБКА
 // const openingSymbols = ['(', '[', '{', '<'];
 // const closingSymbols = [')', ']', '}', '>'];
@@ -270,52 +271,66 @@ console.log(bubbleSort(bubble))
 
 // console.log(isBalanced('[()]'))
 
-
+//№ 14
+// Функция выводить пересечения двух массивов без учета дублей
 const persech1 = [10, 11, 24];
 const persech2 = [10, 13, 14, 18, 24, 30];
-
+// В коде вводятся два указателя(индекса) на каждый из массивов. Начальное значение каждого указателя 0. Затем идет проверка элементов находящихся
+// под этими индексами в обоих массивах. Если они совпадают то значение заносится в результирующий массив а оба индекса инкрементируются.
+// Если значение в первом массиве больше чем во втором  то инекроментируется указатель второго массива, иначе - первого
 const getSamesCount = (arr1, arr2) => {
     let result = [];
+    //помещаем в переменную проверку на дубликат и возвращаем общее значение
     let map = arr1.reduce((acc, i) => {
         acc[i] = acc[i] ? acc[i] + 1 : 1;
+        // console.log(acc)
         return acc;
     }, {})
-
+    // проходимся по второму масиву 
     for (let i = 0; i < arr2.length; i++) {
         const current = arr2[i]
+        // console.log(current)
+        // каждый элемент прохjдит проверку совпадения значений со втормы массивом если значение не совпало оно заменяетя undefined
         let count = map[current];
-
+        // console.log(count)
+        // проверяем есть ли значение в переенной если да то пушим в конец массива если нет удаляем элемент массива 
         if (count && count > 0) {
             result.push(current);
             map[current] -= 1;
+            console.log(result)
         }
     } 
-
+    // помещаем результирующий массив  в этой срочке не выжу смысла так как уже есть массив данных спросить на хекслете смысл этой строки
     const res = [...new Set(result)]
-
     return res
 }
 console.log(getSamesCount(persech1, persech2))
 
+// № 15
+// Функция находит ближайший массив с данных указанный в параметрах
+// функция getDistance нужно еще написать 
 const location = [
     ['Park', [10, 5]],
     ['Sea', [1, 3]],
     ['Museum', [8, 4]]
 ];
-
 const currentPoint = [5, 5];
-
 const getTheNearestLocation = (loc, curr) => {
     if (loc.length === 0) {
         return null;
     }
+    // записсываем в массив точки
     let [nearestLocation] = loc;
+    console.log(nearestLocation)
+    // записываем во второй параметр массива массив точек 
     const [, nearestPoint] = nearestLocation;
+    // вычисляем дистанцию 
     let lowestDistance = getDistance(curr, nearestPoint);
-
+    // перебираем массив и сравниваем совпадение с указанной точкой
     for (const location of loc) {
         const [, point] = location;
         const distance = getDistance(curr, point);
+        // если дистанция блика к точке то попадает в рузультат
         if (distance < lowestDistance) {
             lowestDistance = distance;
             nearestLocation = location
@@ -326,14 +341,16 @@ const getTheNearestLocation = (loc, curr) => {
 
 console.log(getTheNearestLocation(location, currentPoint))
 
+// № 16 
+// Ищем максимальное значение в массиве
 const max = [1, 10, 8];
 
 const getMax = (coll) => {
     if (coll.length === 0) {
         return null;
     }
-
     let [max, ...rest ] = coll;
+    // перебираем массив и если значение больше максимального то делаем его максимальным
     for (const value of rest) {
         if (value > max) {
             max = value;
@@ -343,11 +360,16 @@ const getMax = (coll) => {
 }
 console.log(getMax(max))
 
+// № 17
+// Функция выпремляет массив (если элементы массива являются массивом)
 const flat = [1, [3, 2], 9];
 
 const flatten = (coll) => {
     let result = [];
+
     for (const item of coll) {
+        // метод isArray возвращает true если элемент массива является массив 
+        // если это так то раскрываем массив с помощью рест оператора
         if (Array.isArray(item)) {
             result = [...result, ...item]
         } else {
