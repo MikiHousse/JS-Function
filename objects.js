@@ -39,11 +39,16 @@ console.log(company(company1, company2))
 const domen = 'http://hexlet.io'
 
 const getDomainInfo = (file) => {
-    const parts = file.split('://');
-    const name = _.last(parts); // соединяет объект
-    const scheme = parts.length > 1 ? parts[0] : 'http'; // если у строки есть длина добавляется строка если нет то http
-    const info = {scheme, name};
-    return info
+    let scheme = '';
+    if (file.startsWith('https://')) {
+      scheme = 'https';
+      // else if другие протоколы
+    } else {
+      scheme = 'http';
+    }
+    const name = domain.replace(`${scheme}://`, '');
+  
+    return { scheme, name };
 }
 console.log(getDomainInfo(domen))
 
@@ -101,7 +106,7 @@ const iz = (data, keys) => {
     let current = data;
     for (const key of keys) {
         const hasProperty = Object.hasOwn(current, key);
-        // не и ли там указанного объекута если нет то null иначе помещаем его в переменную
+        // нет ли там указанного объекута если нет то null иначе помещаем его в переменную
         if (!hasProperty) {
             return null
         }
@@ -113,6 +118,7 @@ const iz = (data, keys) => {
 console.log(iz(data1, ['hosts', 0]))
 
 //№ 7
+// Функция заполняет объект данными из другого объекта по списку ключей
 const company3 = {
     name: null,
     state: 'moderating',
@@ -124,13 +130,13 @@ const data2 = {
   };
 
 const slik = (obj, keys, data) => {
-    const filter = keys.length > 0 ? _.pick(data, keys) : data;
-    Object.assign(obj, filter)
+    const filter = keys.length > 0 ? _.pick(data, keys) : data; // создаем новымй объект с ключамт есди длина ключа больше 0
+    Object.assign(obj, filter) // выполняем поверхостное слияние
 }
 console.log(slik(company3, ['name'], data2));
 
 //№ 8
-
+// Функция выполняет глубокое коприрование объектов
 const data4 = {
     key: 'value',
     key2: {
@@ -143,9 +149,9 @@ const data4 = {
 
 const cloneDeep = (object) => {
     const result = {};
-    const entires = Object.entries(object);
+    const entires = Object.entries(object); // возвращаем массив из переданных свойст в формате ключ значение
     for (const [key, value] of entires) {
-        result[key] = isObject(value) ? cloneDeep(value) : value;
+        result[key] = isObject(value) ? cloneDeep(value) : value; //если объект является объектом то выполняем глубокое копирование 
     }
     return result;
 };
@@ -153,8 +159,8 @@ const cloneDeep = (object) => {
 console.log(data4);
 
 //№ 9
+// Функция создает объект компании и возвращает его ПОСЛЕ ПОКУПКИ ПОДПИСКИ РАЗОБРАТЬ ЗАДАЧУ
 const company4 = make('Hexlet', { website: 'hexlet.io', state: 'published' });
-
 const comp = (name, date = {}) => {
     const defaultData = {
         state: 'moderating',
@@ -166,6 +172,7 @@ const comp = (name, date = {}) => {
 console.log(comp(company4, make('Hexlet')))
 
 //№ 10
+//Функция принимает список пользователей извлекает их имена и сортирует в алфавитном порядке
 const users = [
     { name: 'Bronn', gender: 'male', birthday: '1973-03-23' },
     { name: 'Reigar', gender: 'male', birthday: '1973-11-03' },
@@ -175,6 +182,7 @@ const users = [
 
 const userFun = (users) => {
     const names = [];
+    // обходим массив объектов по ключу и сортируем их в пустой массив 
     for (const {name} of users) {
         names.push(name)
     }

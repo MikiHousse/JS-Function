@@ -160,7 +160,7 @@ console.log(strings(definitios))
 // Функция заменяет указанные слова в предложении на $#%!
 const sentence = 'When you play the game of thrones, you win or you die';
 const makeCensored = (str, value) => {
-    // рабиваем струку на массив строк с помощью split
+    // разбиваем струку на массив строк с помощью split
     let arr = str.split(' ')
     const newArr = [];
     for (let word of arr) {
@@ -300,7 +300,7 @@ const getSamesCount = (arr1, arr2) => {
             console.log(result)
         }
     } 
-    // помещаем результирующий массив  в этой срочке не выжу смысла так как уже есть массив данных спросить на хекслете смысл этой строки
+    // помещаем результирующий массив в этой срочке не выжу смысла так как уже есть массив данных спросить на хекслете смысл этой строки
     const res = [...new Set(result)]
     return res
 }
@@ -315,11 +315,17 @@ const location = [
     ['Museum', [8, 4]]
 ];
 const currentPoint = [5, 5];
+const getDistance = ([x1, y1], [x2, y2]) => {
+    const xs = x2 - x1;
+    const ys = y2 - y1;
+  
+    return Math.sqrt(xs ** 2 + ys ** 2);
+  };
 const getTheNearestLocation = (loc, curr) => {
     if (loc.length === 0) {
         return null;
     }
-    // записсываем в массив точки
+    // записываем в массив точки
     let [nearestLocation] = loc;
     console.log(nearestLocation)
     // записываем во второй параметр массива массив точек 
